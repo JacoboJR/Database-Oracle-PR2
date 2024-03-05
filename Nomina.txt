@@ -1,0 +1,354 @@
+CREATE TABLE colonia (
+    cve_colonia     NUMBER NOT NULL,
+    nombre          VARCHAR2(100) NOT NULL,
+    codigo_postal   INTEGER NOT NULL,
+    cve_municipio   NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX colonia__idx ON
+    colonia (
+        cve_colonia
+    ASC )
+        LOGGING;
+
+ALTER TABLE colonia ADD CONSTRAINT pk_colonia PRIMARY KEY ( cve_colonia );
+
+CREATE TABLE deducciones (
+    cve_deducciones   NUMBER NOT NULL,
+    issste            NUMBER NOT NULL,
+    fondo_ahorro      NUMBER NOT NULL,
+    impuestos         NUMBER NOT NULL,
+    cve_pago          NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX deducciones__idx ON
+    deducciones (
+        cve_deducciones
+    ASC )
+        LOGGING;
+
+ALTER TABLE deducciones ADD CONSTRAINT pk_deducciones PRIMARY KEY ( cve_deducciones );
+
+CREATE TABLE departamento (
+    "cve_departamento "   NUMBER NOT NULL,
+    nombre_r              VARCHAR2(100) NOT NULL,
+    cve_domicilio         NUMBER NOT NULL,
+    cve_jefe_depto        NUMBER NOT NULL,
+    cve_empresa           NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX departamento__idx ON
+    departamento (
+        "cve_departamento "
+    ASC )
+        LOGGING;
+
+ALTER TABLE departamento ADD CONSTRAINT pk_departamento PRIMARY KEY ( "cve_departamento " );
+
+CREATE TABLE domicilio (
+    cve_domicilio   NUMBER NOT NULL,
+    calle           VARCHAR2(100) NOT NULL,
+    numext          INTEGER NOT NULL,
+    cve_colonia     NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX domicilio__idx ON
+    domicilio (
+        cve_domicilio
+    ASC )
+        LOGGING;
+
+ALTER TABLE domicilio ADD CONSTRAINT pk_domicilio PRIMARY KEY ( cve_domicilio );
+
+CREATE TABLE empleado (
+    cve_empleado          NUMBER NOT NULL,
+    nombre                VARCHAR2(100) NOT NULL,
+    genero                VARCHAR2(10) NOT NULL,
+    puesto                VARCHAR2(100) NOT NULL,
+    email                 VARCHAR2(30) NOT NULL,
+    cb_asociada           VARCHAR2(30) NOT NULL,
+    rfc                   VARCHAR2(100) NOT NULL,
+    cve_persona           NUMBER NOT NULL,
+    cve_empresa           NUMBER NOT NULL,
+    cve_nomina            NUMBER NOT NULL,
+    cve_pago              NUMBER NOT NULL,
+    cve_domicilio         NUMBER NOT NULL,
+    "cve_departamento "   NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX empleado__idx ON
+    empleado (
+        cve_empleado
+    ASC )
+        LOGGING;
+
+ALTER TABLE empleado ADD CONSTRAINT pk_empleado PRIMARY KEY ( cve_empleado );
+
+CREATE TABLE empresa (
+    cve_empresa     NUMBER NOT NULL,
+    nombre_c        VARCHAR2(100) NOT NULL,
+    razon_social    VARCHAR2(100) NOT NULL,
+    cve_jefe        NUMBER NOT NULL,
+    cve_domicilio   NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX empresa__idx ON
+    empresa (
+        cve_empresa
+    ASC )
+        LOGGING;
+
+ALTER TABLE empresa ADD CONSTRAINT pk_empresa PRIMARY KEY ( cve_empresa );
+
+CREATE TABLE estado (
+    cve_estado   NUMBER NOT NULL,
+    nombre       VARCHAR2(100) NOT NULL,
+    capital      VARCHAR2(100) NOT NULL,
+    cve_pais     NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX estado__idx ON
+    estado (
+        cve_estado
+    ASC )
+        LOGGING;
+
+ALTER TABLE estado ADD CONSTRAINT pk_estado PRIMARY KEY ( cve_estado );
+
+CREATE TABLE "Municipio " (
+    cve_municipio   NUMBER NOT NULL,
+    nombre          VARCHAR2(100) NOT NULL,
+    cve_estado      NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX "Municipio __IDX" ON
+    "Municipio " (
+        cve_municipio
+    ASC )
+        LOGGING;
+
+ALTER TABLE "Municipio " ADD CONSTRAINT pk_municipio PRIMARY KEY ( cve_municipio );
+
+CREATE TABLE nomina (
+    cve_nomina    NUMBER NOT NULL,
+    concepto      VARCHAR2(100) NOT NULL,
+    cve_empresa   NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX nomina__idx ON
+    nomina (
+        cve_nomina
+    ASC )
+        LOGGING;
+
+ALTER TABLE nomina ADD CONSTRAINT pk_nomina PRIMARY KEY ( cve_nomina );
+
+CREATE TABLE pago (
+    cve_pago     NUMBER NOT NULL,
+    total_pago   NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX pago__idx ON
+    pago (
+        cve_pago
+    ASC )
+        LOGGING;
+
+ALTER TABLE pago ADD CONSTRAINT pk_pago PRIMARY KEY ( cve_pago );
+
+CREATE TABLE pais (
+    cve_pais   NUMBER NOT NULL,
+    nombre     VARCHAR2(100) NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE INDEX pais__idx ON
+    pais (
+        cve_pais
+    ASC )
+        LOGGING;
+
+ALTER TABLE pais ADD CONSTRAINT pk_pais PRIMARY KEY ( cve_pais );
+
+CREATE TABLE percepciones (
+    cve_percepciones   NUMBER NOT NULL,
+    salario_base       NUMBER NOT NULL,
+    apoyo_seguro       NUMBER NOT NULL,
+    bono_puntualidad   NUMBER NOT NULL,
+    vales_despensa     NUMBER NOT NULL,
+    cve_pago           NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX percepciones__idx ON
+    percepciones (
+        cve_percepciones
+    ASC )
+        LOGGING;
+
+ALTER TABLE percepciones ADD CONSTRAINT pk_percepciones PRIMARY KEY ( cve_percepciones );
+
+CREATE TABLE persona (
+    cve_persona        NUMBER NOT NULL,
+    nombre             VARCHAR2(100) NOT NULL,
+    a_paterno          VARCHAR2(100) NOT NULL,
+    a_materno          VARCHAR2(100) NOT NULL,
+    aniodenacimiento   INTEGER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX persona__idx ON
+    persona (
+        cve_persona
+    ASC )
+        LOGGING;
+
+ALTER TABLE persona ADD CONSTRAINT pk_persona PRIMARY KEY ( cve_persona );
+
+CREATE TABLE quincenas (
+    cve_quincenas   NUMBER NOT NULL,
+    fecha           DATE NOT NULL,
+    cve_nomina      NUMBER NOT NULL,
+    cve_empleado    NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX quincenas__idx ON
+    quincenas (
+        cve_quincenas
+    ASC )
+        LOGGING;
+
+ALTER TABLE quincenas ADD CONSTRAINT pk_quincenas PRIMARY KEY ( cve_quincenas );
+
+CREATE TABLE telefonos (
+    cve_telefonos   NUMBER NOT NULL,
+    numero          NUMBER NOT NULL,
+    lada            VARCHAR2(4) NOT NULL,
+    extension       VARCHAR2(4),
+    cve_empleado    NUMBER NOT NULL
+)
+TABLESPACE datos LOGGING;
+
+CREATE UNIQUE INDEX telefonos__idx ON
+    telefonos (
+        cve_telefonos
+    ASC )
+        LOGGING;
+
+ALTER TABLE telefonos ADD CONSTRAINT pk_telefonos PRIMARY KEY ( cve_telefonos );
+
+ALTER TABLE domicilio
+    ADD CONSTRAINT fk_colonia_domicilio FOREIGN KEY ( cve_colonia )
+        REFERENCES colonia ( cve_colonia )
+    NOT DEFERRABLE;
+
+ALTER TABLE empleado
+    ADD CONSTRAINT fk_departamento_empleado FOREIGN KEY ( "cve_departamento " )
+        REFERENCES departamento ( "cve_departamento " )
+    NOT DEFERRABLE;
+
+ALTER TABLE departamento
+    ADD CONSTRAINT fk_domicilio_departamento FOREIGN KEY ( cve_domicilio )
+        REFERENCES domicilio ( cve_domicilio )
+    NOT DEFERRABLE;
+
+ALTER TABLE empleado
+    ADD CONSTRAINT fk_domicilio_empleado FOREIGN KEY ( cve_domicilio )
+        REFERENCES domicilio ( cve_domicilio )
+    NOT DEFERRABLE;
+
+ALTER TABLE empresa
+    ADD CONSTRAINT fk_domicilio_empresa FOREIGN KEY ( cve_domicilio )
+        REFERENCES domicilio ( cve_domicilio )
+    NOT DEFERRABLE;
+
+ALTER TABLE quincenas
+    ADD CONSTRAINT fk_empleado_quincenas FOREIGN KEY ( cve_empleado )
+        REFERENCES empleado ( cve_empleado )
+    NOT DEFERRABLE;
+
+ALTER TABLE telefonos
+    ADD CONSTRAINT fk_empleado_telefonos FOREIGN KEY ( cve_empleado )
+        REFERENCES empleado ( cve_empleado )
+    NOT DEFERRABLE;
+
+ALTER TABLE departamento
+    ADD CONSTRAINT fk_empresa_departamento FOREIGN KEY ( cve_empresa )
+        REFERENCES empresa ( cve_empresa )
+    NOT DEFERRABLE;
+
+ALTER TABLE empleado
+    ADD CONSTRAINT fk_empresa_empleado FOREIGN KEY ( cve_empresa )
+        REFERENCES empresa ( cve_empresa )
+    NOT DEFERRABLE;
+
+ALTER TABLE nomina
+    ADD CONSTRAINT fk_empresa_nomina FOREIGN KEY ( cve_empresa )
+        REFERENCES empresa ( cve_empresa )
+    NOT DEFERRABLE;
+
+ALTER TABLE "Municipio "
+    ADD CONSTRAINT "FK_Estado_Municipio " FOREIGN KEY ( cve_estado )
+        REFERENCES estado ( cve_estado )
+    NOT DEFERRABLE;
+
+ALTER TABLE colonia
+    ADD CONSTRAINT "FK_Municipio _Colonia" FOREIGN KEY ( cve_municipio )
+        REFERENCES "Municipio " ( cve_municipio )
+    NOT DEFERRABLE;
+
+ALTER TABLE empleado
+    ADD CONSTRAINT fk_nomina_empleado FOREIGN KEY ( cve_nomina )
+        REFERENCES nomina ( cve_nomina )
+    NOT DEFERRABLE;
+
+ALTER TABLE quincenas
+    ADD CONSTRAINT fk_nomina_quincenas FOREIGN KEY ( cve_nomina )
+        REFERENCES nomina ( cve_nomina )
+    NOT DEFERRABLE;
+
+ALTER TABLE deducciones
+    ADD CONSTRAINT fk_pago_deducciones FOREIGN KEY ( cve_pago )
+        REFERENCES pago ( cve_pago )
+    NOT DEFERRABLE;
+
+ALTER TABLE empleado
+    ADD CONSTRAINT fk_pago_empleado FOREIGN KEY ( cve_pago )
+        REFERENCES pago ( cve_pago )
+    NOT DEFERRABLE;
+
+ALTER TABLE percepciones
+    ADD CONSTRAINT fk_pago_percepciones FOREIGN KEY ( cve_pago )
+        REFERENCES pago ( cve_pago )
+    NOT DEFERRABLE;
+
+ALTER TABLE estado
+    ADD CONSTRAINT fk_pais_estado FOREIGN KEY ( cve_pais )
+        REFERENCES pais ( cve_pais )
+    NOT DEFERRABLE;
+
+ALTER TABLE departamento
+    ADD CONSTRAINT fk_persona_departamento FOREIGN KEY ( cve_jefe_depto )
+        REFERENCES persona ( cve_persona )
+    NOT DEFERRABLE;
+
+ALTER TABLE empleado
+    ADD CONSTRAINT fk_persona_empleado FOREIGN KEY ( cve_persona )
+        REFERENCES persona ( cve_persona )
+    NOT DEFERRABLE;
+
+ALTER TABLE empresa
+    ADD CONSTRAINT fk_persona_empresa FOREIGN KEY ( cve_jefe )
+        REFERENCES persona ( cve_persona )
+    NOT DEFERRABLE;
